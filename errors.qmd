@@ -38,9 +38,10 @@ Error reporting isn't a priority but is important nonetheless.
 :::: {.columns}
 
 ::: {.column width="60%"}
-#### Principles
+#### Principles of clarity
 
-1. Clarity
+1. Transparency
+1. Relevance
 1. Exhaustiveness
 1. Conciseness
 1. Recognisability
@@ -50,14 +51,16 @@ Error reporting isn't a priority but is important nonetheless.
 #### Tools
 
 - Error bullets
-- Chained errors
+- Error calls
 - Style formatting
+- Chained errors
 :::
 
 ::::
 
 ::: {.notes}
-Clarity: Relevance and transparency (reveal inputs).
+Transparency: Reveal inputs
+Relevance: Where did the error fail. Fail early.
 Exhaustiveness: Context matters.
 Conciseness: Don't overwhelm.
 Recognisability: Repetition is good. Be consistent.
