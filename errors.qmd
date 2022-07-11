@@ -72,6 +72,23 @@ Conciseness: Don't overwhelm.
 :::
 
 
+## Style formatting (WIP)
+
+- Introduce cli and `cli_abort()`
+- Interpolation
+- Style classes
+
+
+## Error bullets
+
+Principles: Concision and exhaustiveness
+
+- No long paragraphs of text
+- Straight to the point
+- Include contextual information
+- Point to external resources
+
+
 ## Consistency
 
 - Error style guide
@@ -104,6 +121,7 @@ From `types-check.R`\
 ```{r include=FALSE}
 library(rlang)
 stop_input_type <- rlang:::stop_input_type
+obj_type_friendly <- rlang:::obj_type_friendly
 ```
 
 ```{r}
@@ -129,9 +147,52 @@ my_function(1)
 ```
 
 
-## Concision and exhaustiveness with error bullets
+## Relevance
 
-- No long paragraphs of text
-- Straight to the point
-- Include contextual information
-- Point to external resources
+In `check_string()` we passed `arg` and `call` arguments:
+
+```{r error=TRUE}
+my_function(my_arg = 1)
+```
+
+```{r include=FALSE}
+check_string <- function(x,
+                         ...,
+                         what = "a single string") {
+  if (!is_string(x)) {
+    stop_input_type(x, what, ...)
+  }
+}
+```
+
+\
+
+Here is what it would look otherwise:
+
+```{r error=TRUE}
+my_function(my_arg = 1)
+```
+
+---
+
+```{r}
+my_check_string <- function(x,
+                            arg = caller_arg(x),
+                            call = caller_env()) {
+  if (!is_string(x)) {
+    expected <- obj_type_friendly(x)
+    cli::cli_abort(
+      "{.arg {arg}} must be a single string, not {}",
+      arg = arg,
+      call = call
+    )
+  }
+}
+```
+
+---
+
+`my_function()`
+
+- Failing early (esp. important with lazy evaluation)
+- Pass call when failing on behalf of
