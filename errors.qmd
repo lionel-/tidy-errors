@@ -1,0 +1,52 @@
+---
+title: "Leave no error unkempt"
+author: "Lionel Henry"
+format:
+  revealjs: 
+    theme: [beige, style.scss]
+    center: true
+    auto-stretch: false
+---
+
+
+## Why take time for errors
+
+::: {layout-ncol=2}
+- Main way users interact with your software
+- Often an afterthought
+
+![](error-window.png){}
+:::
+
+::: {.notes}
+Package developers have to deal with lots of chores:
+- Unit tests
+- Documentation
+- Comments
+- Input checking
+
+Error reporting isn't a priority but is important nonetheless.
+:::
+
+
+## Principles
+
+1. Clarity
+1. Exhaustiveness
+1. Conciseness
+1. Recognisability
+
+::: {.notes}
+Clarity: Relevance and transparency (reveal inputs).
+Exhaustiveness: Context matters.
+Conciseness: Don't overwhelm.
+Recognisability: Repetition is good. Be consistent.
+:::
+
+
+## Error bullets
+
+- No long paragraphs of text
+- Straight to the point
+- Include contextual information
+- Point to external resources
