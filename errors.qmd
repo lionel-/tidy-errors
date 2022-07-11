@@ -45,11 +45,11 @@ Error reporting isn't a priority but is important nonetheless.
 ::: {.column width="60%"}
 #### Principles of clarity
 
+1. Consistency
 1. Transparency
 1. Relevance
 1. Exhaustiveness
 1. Conciseness
-1. Recognisability
 :::
 
 ::: {.column width="40%"}
@@ -64,12 +64,20 @@ Error reporting isn't a priority but is important nonetheless.
 ::::
 
 ::: {.notes}
+Consistency: Repetition is good. Recognisability. Style guide.
 Transparency: Reveal inputs
 Relevance: Where did the error fail. Fail early.
 Exhaustiveness: Context matters.
 Conciseness: Don't overwhelm.
-Recognisability: Repetition is good. Be consistent. Style guide.
 :::
+
+
+## Consistency
+
+- Error style guide
+- Use "must" and "can't" phrasing
+- Create and reuse input checking functions
+- Use cli themes
 
 
 ## Transparency
@@ -121,7 +129,7 @@ my_function(1)
 ```
 
 
-## Error bullets
+## Concision and exhaustiveness with error bullets
 
 - No long paragraphs of text
 - Straight to the point
