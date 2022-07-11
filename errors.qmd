@@ -28,13 +28,28 @@ Package developers have to deal with lots of chores:
 Error reporting isn't a priority but is important nonetheless.
 :::
 
+---
 
-## Principles
+:::: {.columns}
+
+::: {.column width="60%"}
+#### Principles
 
 1. Clarity
 1. Exhaustiveness
 1. Conciseness
 1. Recognisability
+:::
+
+::: {.column width="40%"}
+#### Tools
+
+- Error bullets
+- Chained errors
+- Style formatting
+:::
+
+::::
 
 ::: {.notes}
 Clarity: Relevance and transparency (reveal inputs).
