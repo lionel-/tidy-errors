@@ -11,12 +11,17 @@ format:
 
 ## Why take time for errors
 
-::: {layout-ncol=2}
+:::: {.columns}
+::: {.column width="60%"}
 - Main way users interact with your software
 - Often an afterthought
+:::
 
+::: {.column width="40%"}
 ![](error-window.png){}
 :::
+
+::::
 
 ::: {.notes}
 Package developers have to deal with lots of chores:
