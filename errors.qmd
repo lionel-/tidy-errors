@@ -2,10 +2,15 @@
 title: "Leave no error unkempt"
 author: "Lionel Henry"
 format:
-  revealjs: 
+  revealjs:
     theme: [beige, style.scss]
     center: true
     auto-stretch: false
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: "#>"
+    echo: TRUE
 ---
 
 
@@ -63,8 +68,57 @@ Transparency: Reveal inputs
 Relevance: Where did the error fail. Fail early.
 Exhaustiveness: Context matters.
 Conciseness: Don't overwhelm.
-Recognisability: Repetition is good. Be consistent.
+Recognisability: Repetition is good. Be consistent. Style guide.
 :::
+
+
+## Transparency
+
+- Which function failed? For which argument?
+- What did you expect, what did you get?
+- Reveal input type and any other relevant aspect
+
+::: {.callout-note appearance="simple" icon=false}
+::: {.my-smaller}
+- See `obj_type_friendly()` and `stop_input_type()` in `compat-obj-type.R`\
+  <https://github.com/r-lib/rlang/blob/main/R/compat-obj-type.R>
+
+- See examples in `types-check.R`\
+  <https://github.com/r-lib/rlang/blob/main/R/types-check.R>
+:::
+:::
+
+---
+
+From `types-check.R`\
+<https://github.com/r-lib/rlang/blob/main/R/types-check.R>
+
+```{r include=FALSE}
+library(rlang)
+stop_input_type <- rlang:::stop_input_type
+```
+
+```{r}
+check_string <- function(x,
+                         ...,
+                         what = "a single string",
+                         arg = caller_arg(x),
+                         call = caller_env()) {
+  if (!is_string(x)) {
+    stop_input_type(x, what, ..., arg = arg, call = call)
+  }
+}
+
+my_function <- function(my_arg) {
+  check_string(my_arg)
+}
+```
+
+\
+
+```{r error=TRUE}
+my_function(1)
+```
 
 
 ## Error bullets
