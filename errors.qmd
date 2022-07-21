@@ -20,7 +20,7 @@ library(tidyverse)
 
 ## Why take time for errors
 
-:::: {.columns}
+:::: columns
 ::: {.column width="60%"}
 - Main way users interact with your software
 - Often an afterthought
@@ -32,7 +32,7 @@ library(tidyverse)
 
 ::::
 
-::: {.notes}
+::: notes
 Package developers have to deal with lots of chores:
 - Unit tests
 - Documentation
@@ -44,8 +44,7 @@ Error reporting isn't a priority but is important nonetheless.
 
 ---
 
-:::: {.columns}
-
+:::: columns
 ::: {.column width="60%"}
 #### Principles of clarity
 
@@ -64,7 +63,6 @@ Error reporting isn't a priority but is important nonetheless.
 - Error calls
 - Chained errors
 :::
-
 ::::
 
 ::: {.notes}
@@ -125,7 +123,7 @@ cli::cli_abort("{.arg x} can't be supplied to {.code foo()}.")
 \
 
 ::: {.callout-note appearance="simple" icon=false}
-::: {.my-smaller}
+::: my-smaller
 **Principle** of consistency
 :::
 :::
@@ -164,7 +162,7 @@ cli::cli_abort("Can't supply {n_files} file{?s}.")
 
 ## Error bullets
 
-:::: {.columns}
+:::: columns
 
 ::: {.column width="60%"}
 Be *concise*:
@@ -180,7 +178,7 @@ But be *exhaustive*:
 
 ::: {.column width="40%"}
 ::: {.callout-note appearance="simple" icon=false}
-::: {.my-smaller}
+::: my-smaller
 **Principles**
 
 - Concision
@@ -261,7 +259,7 @@ cli::cli_abort(c("My error message.", bullets))
 - Reveal input type and any other relevant aspect
 
 ::: {.callout-note appearance="simple" icon=false}
-::: {.my-smaller}
+::: my-smaller
 - See `obj_type_friendly()` and `stop_input_type()` in `compat-obj-type.R`\
   <https://github.com/r-lib/rlang/blob/main/R/compat-obj-type.R>
 
