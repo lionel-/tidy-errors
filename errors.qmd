@@ -59,9 +59,9 @@ Error reporting isn't a priority but is important nonetheless.
 ::: {.column width="40%"}
 #### Tools
 
+- Formatting with cli
 - Error bullets
 - Error calls
-- Style formatting
 - Chained errors
 :::
 
@@ -76,20 +76,88 @@ Conciseness: Don't overwhelm.
 :::
 
 
-## Throwing with cli
+# Formatting with cli
+
+## Formatting with cli
 
 - Most of the features presented here require `cli::cli_abort()`
 
-- Wrapper around `rlang::abort()` that adds many features to assemble and format messages
+- Like `base::stop()` but with many additional features
 
-- Check out the `cli` package: <https://cli.r-lib.org/>
+- To get help:
+
+  - Read the cli documentation at <https://cli.r-lib.org/>
+  - Consult `?rlang::abort`
 
 
-## Style formatting (WIP)
+## Interpolation and style classes
 
-- Introduce cli and `cli_abort()`
-- Interpolation
-- Style classes
+cli embeds glue interpolation
+
+```{r error=TRUE}
+action <- "paint"
+what <- "canvas"
+how <- "in green"
+
+cli::cli_abort("Can't {action} {what} {how}.")
+```
+
+\
+
+::: {.callout-note appearance="simple" icon=false}
+::: my-smaller
+**Principle** of transparency (show values)
+:::
+:::
+
+::: notes
+Interpolating encourages us to create dynamic rather than static messages, which in turn helps us create transparent rather than opaque error messages.
+:::
+
+---
+
+It supports style classes (quotes and colours)
+
+```{r error=TRUE}
+cli::cli_abort("{.arg x} can't be supplied to {.code foo()}.")
+```
+
+\
+
+::: {.callout-note appearance="simple" icon=false}
+::: {.my-smaller}
+**Principle** of consistency
+:::
+:::
+
+---
+
+Styles and interpolation can be combined
+
+```{r error=TRUE}
+arg <- "x"
+call <- "foo()"
+
+cli::cli_abort("{.arg {arg}} can't be supplied to {.code {call}}.")
+```
+
+---
+
+Check out all the advanced cli features, e.g. pluralisation
+
+```{r error=TRUE}
+n_files <- 1
+
+cli::cli_abort("Can't supply {n_files} file{?s}.")
+```
+
+\
+
+```{r error=TRUE}
+n_files <- 2
+
+cli::cli_abort("Can't supply {n_files} file{?s}.")
+```
 
 
 # Error bullets
