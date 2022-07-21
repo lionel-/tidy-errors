@@ -63,6 +63,7 @@ Error reporting isn't a priority but is important nonetheless.
 - Use error bullets
 - Pass error calls
 - Use chained errors
+- Create input checking functions
 :::
 ::::
 
@@ -267,6 +268,16 @@ cli::cli_abort(c("My error message.", bullets))
 ## Pass error calls
 
 ## Transparency
+
+# Create input checking functions
+
+## Create input checking functions
+
+::: {.callout-note appearance="simple" icon=false}
+::: my-smaller
+**Principle** of relevance
+:::
+:::
 
 - Which function failed? For which argument?
 - What did you expect, what did you get?
