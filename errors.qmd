@@ -254,7 +254,7 @@ set.seed(5)
 
 ```{r error=TRUE}
 # Variable length character vector
-bullets <- letters[seq_len(sample(3:5))]
+bullets <- letters[seq_len(sample(3:5, size = 1))]
 
 # Set their bullet names
 bullets <- set_names(bullets, "*")
