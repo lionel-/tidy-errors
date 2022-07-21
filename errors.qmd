@@ -45,7 +45,7 @@ Error reporting isn't a priority but is important nonetheless.
 ---
 
 :::: columns
-::: {.column width="60%"}
+::: {.column width="55%"}
 #### Principles of clarity
 
 1. Consistency
@@ -55,13 +55,14 @@ Error reporting isn't a priority but is important nonetheless.
 1. Conciseness
 :::
 
-::: {.column width="40%"}
+::: {.column width="45%"}
 #### Tools
 
-- Formatting with cli
-- Error bullets
-- Error calls
-- Chained errors
+- Format with cli
+- Follow the style guide
+- Use error bullets
+- Pass error calls
+- Use chained errors
 :::
 ::::
 
@@ -74,9 +75,29 @@ Conciseness: Don't overwhelm.
 :::
 
 
-# Formatting with cli
+# Follow the style guide
 
-## Formatting with cli
+## Follow the style guide
+
+- <https://style.tidyverse.org>
+
+- Use "must" and "can't" phrasings
+
+  - "Must" when you know what is a valid input
+  - "Can't" when you know what an invalid input
+
+- Guiding error style is hard - still a WIP
+
+::: {.callout-note appearance="simple" icon=false}
+::: my-smaller
+**Principle** of consistency
+:::
+:::
+
+
+# Format with cli
+
+## Format with cli
 
 - Most of the features presented here require `cli::cli_abort()`
 
@@ -158,9 +179,9 @@ cli::cli_abort("Can't supply {n_files} file{?s}.")
 ```
 
 
-# Error bullets
+# Use error bullets
 
-## Error bullets
+## Use error bullets
 
 :::: columns
 
@@ -242,15 +263,9 @@ cli::cli_abort(c("My error message.", bullets))
 ```
 
 
+# Pass error calls
 
-
-## Consistency
-
-- Error style guide
-- Use "must" and "can't" phrasing
-- Create and reuse input checking functions
-- Use cli themes
-
+## Pass error calls
 
 ## Transparency
 
