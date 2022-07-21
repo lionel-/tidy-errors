@@ -13,6 +13,10 @@ knitr:
     echo: TRUE
 ---
 
+```{r include=FALSE}
+library(tidyverse)
+```
+
 
 ## Why take time for errors
 
@@ -72,12 +76,23 @@ Conciseness: Don't overwhelm.
 :::
 
 
+## Throwing with cli
+
+- Most of the features presented here require `cli::cli_abort()`
+
+- Wrapper around `rlang::abort()` that adds many features to assemble and format messages
+
+- Check out the `cli` package: <https://cli.r-lib.org/>
+
+
 ## Style formatting (WIP)
 
 - Introduce cli and `cli_abort()`
 - Interpolation
 - Style classes
 
+
+# Error bullets
 
 ## Error bullets
 
@@ -107,6 +122,60 @@ But be *exhaustive*:
 :::
 
 ::::
+
+---
+
+Contextual information:
+
+```{r, error=TRUE}
+starwars[, 1:25]
+```
+
+\
+
+Recommendation and external resource: \
+
+```{r include=FALSE}
+rlang::reset_message_verbosity("strict_lookup_var")
+```
+```{r message = TRUE}
+var <- "height"
+invisible(starwars |> select(var))
+```
+
+---
+
+Pass a named vector as error message to create bullets
+
+```{r error=TRUE}
+cli::cli_abort(c(
+  "My error message.",
+  "*" = "Bullet",
+  "i" = "Info bullet",
+  "x" = "Cross bullet",
+  "v" = "Check bullet"
+))
+```
+
+---
+
+Create named bullets programmatically with `set_names()`
+
+```{r include=FALSE}
+set.seed(5)
+```
+
+```{r error=TRUE}
+# Variable length character vector
+bullets <- letters[seq_len(sample(3:5))]
+
+# Set their bullet names
+bullets <- set_names(bullets, "*")
+
+cli::cli_abort(c("My error message.", bullets))
+```
+
+
 
 
 ## Consistency
