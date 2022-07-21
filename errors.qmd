@@ -61,9 +61,8 @@ Error reporting isn't a priority but is important nonetheless.
 - Format with cli
 - Follow the style guide
 - Use error bullets
-- Pass error calls
+- Pass error calls and arguments
 - Use chained errors
-- Create input checking functions
 :::
 ::::
 
@@ -263,15 +262,12 @@ cli::cli_abort(c("My error message.", bullets))
 ```
 
 
-# Pass error calls
+# Pass error calls and arguments
 
-## Pass error calls
+## Relevant context
 
-## Transparency
-
-# Create input checking functions
-
-## Create input checking functions
+- Which function failed? For which argument?
+- What did you expect, what did you get?
 
 ::: {.callout-note appearance="simple" icon=false}
 ::: my-smaller
@@ -279,8 +275,50 @@ cli::cli_abort(c("My error message.", bullets))
 :::
 :::
 
-- Which function failed? For which argument?
-- What did you expect, what did you get?
+
+## Pass error calls and arguments
+
+By default R reports the last function before failure
+
+```{r error=TRUE}
+f <- function() g()
+g <- function() h()
+h <- function() cli::cli_abort("Can't do that")
+
+f()
+```
+
+---
+
+```{r}
+my_function <- function(x) {
+  check_n_distinct(x, 2)
+}
+
+check_n_distinct <- function(x, n) {
+  actual <- dplyr::n_distinct(x)
+
+  if (actual != n) {
+    cli::cli_abort("Vector must have {n} distinct values, not {actual}.")
+  }
+}
+```
+
+\
+
+Function call is not relevant:
+
+```{r error=TRUE}
+my_function(1:10)
+```
+
+---
+
+TODO
+
+
+## Reveal input type
+
 - Reveal input type and any other relevant aspect
 
 ::: {.callout-note appearance="simple" icon=false}
