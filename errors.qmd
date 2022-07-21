@@ -81,12 +81,32 @@ Conciseness: Don't overwhelm.
 
 ## Error bullets
 
-Principles: Concision and exhaustiveness
+:::: {.columns}
 
-- No long paragraphs of text
-- Straight to the point
+::: {.column width="60%"}
+Be *concise*:
+
+- Avoid paragraphs of text
+- Be straight to the point
+
+But be *exhaustive*:
+
 - Include contextual information
 - Point to external resources
+:::
+
+::: {.column width="40%"}
+::: {.callout-note appearance="simple" icon=false}
+::: {.my-smaller}
+**Principles**
+
+- Concision
+- Exhaustiveness
+:::
+:::
+:::
+
+::::
 
 
 ## Consistency
