@@ -266,8 +266,8 @@ cli::cli_abort(c("My error message.", bullets))
 
 ## Relevant context
 
-- Which function failed? For which argument?
-- What did you expect, what did you get?
+- Which function failed?
+- For which argument?
 
 ::: {.callout-note appearance="simple" icon=false}
 ::: my-smaller
@@ -319,7 +319,14 @@ TODO
 
 ## Reveal input type
 
+- What did you expect, what did you get?
 - Reveal input type and any other relevant aspect
+
+::: {.callout-note appearance="simple" icon=false}
+::: my-smaller
+**Principle** of relevance
+:::
+:::
 
 ::: {.callout-note appearance="simple" icon=false}
 ::: my-smaller
