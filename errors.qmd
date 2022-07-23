@@ -85,12 +85,12 @@ Conciseness: Don't overwhelm.
 :::
 :::
 
-- <https://style.tidyverse.org>
+- <https://style.tidyverse.org/error-messages.html>
 
-- Use "must" and "can't" phrasings
+- State problem with "must" and "can't" phrases
 
   - "Must" when you know what is a valid input
-  - "Can't" when you know what an invalid input
+  - "Can't" when you know what is an invalid input
 
 - Guiding error style is hard---still a WIP
 
