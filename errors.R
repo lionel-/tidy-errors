@@ -37,3 +37,49 @@ my_function <- function(x) {
 my_function(1)
 #> Error in `my_function()`:
 #> ! `x` must be a single string, not a number.
+
+
+#  Call and arg
+
+my_function <- function(x) {
+  check_n_distinct(x, 2)
+}
+
+check_n_distinct <- function(x, n, call = rlang::caller_env()) {
+  actual <- dplyr::n_distinct(x)
+
+  if (actual != n) {
+    cli::cli_abort(
+      "Vector must have {n} distinct values, not {actual}.",
+      call = call
+    )
+  }
+}
+
+my_function(1:3)
+#> Error in `my_function()`:
+#> ! Vector must have 2 distinct values, not 3.
+#> Run `rlang::last_trace()` to see where the error occurred.
+
+rlang::last_trace()
+
+
+check_n_distinct <- function(x,
+                             n,
+                             call = rlang::caller_env(),
+                             arg = rlang::caller_arg(x)) {
+  actual <- dplyr::n_distinct(x)
+
+  if (actual != n) {
+    cli::cli_abort(
+      "{.arg {arg}} must have {n} distinct values, not {actual}.",
+      call = call,
+      arg = arg
+    )
+  }
+}
+
+my_function(1:3)
+#> Error in `my_function()`:
+#> ! `x` must have 2 distinct values, not 3.
+#> Run `rlang::last_trace()` to see where the error occurred.

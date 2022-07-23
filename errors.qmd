@@ -290,6 +290,8 @@ f()
 
 ---
 
+But the last function is not always relevant
+
 ```{r}
 my_function <- function(x) {
   check_n_distinct(x, 2)
@@ -306,7 +308,7 @@ check_n_distinct <- function(x, n) {
 
 \
 
-Function call is not relevant:
+Should mention `my_function()`
 
 ```{r error=TRUE}
 my_function(1:10)
@@ -314,102 +316,48 @@ my_function(1:10)
 
 ---
 
-TODO
-
-
-## Reveal input type
-
-- What did you expect, what did you get?
-- Reveal input type and any other relevant aspect
-
-::: {.callout-note appearance="simple" icon=false}
-::: my-smaller
-**Principle** of relevance
-:::
-:::
-
-::: {.callout-note appearance="simple" icon=false}
-::: my-smaller
-- See `obj_type_friendly()` and `stop_input_type()` in `compat-obj-type.R`\
-  <https://github.com/r-lib/rlang/blob/main/R/compat-obj-type.R>
-
-- See examples in `types-check.R`\
-  <https://github.com/r-lib/rlang/blob/main/R/types-check.R>
-:::
-:::
-
----
-
-From `types-check.R`\
-<https://github.com/r-lib/rlang/blob/main/R/types-check.R>
-
-```{r include=FALSE}
-library(rlang)
-stop_input_type <- rlang:::stop_input_type
-obj_type_friendly <- rlang:::obj_type_friendly
-```
-
-```{r}
-check_string <- function(x,
-                         ...,
-                         what = "a single string",
-                         arg = caller_arg(x),
-                         call = caller_env()) {
-  if (!is_string(x)) {
-    stop_input_type(x, what, ..., arg = arg, call = call)
-  }
-}
-
-my_function <- function(my_arg) {
-  check_string(my_arg)
-}
-```
-
-\
+Pass `call = caller_env()` to `cli_abort()`
 
 ```{r error=TRUE}
-my_function(1)
-```
+check_n_distinct <- function(x, n, call = rlang::caller_env()) {
+  actual <- dplyr::n_distinct(x)
 
-
-## Relevance
-
-In `check_string()` we passed `arg` and `call` arguments:
-
-```{r error=TRUE}
-my_function(my_arg = 1)
-```
-
-```{r include=FALSE}
-check_string <- function(x,
-                         ...,
-                         what = "a single string") {
-  if (!is_string(x)) {
-    stop_input_type(x, what, ...)
-  }
-}
-```
-
-\
-
-Here is what it would look otherwise:
-
-```{r error=TRUE}
-my_function(my_arg = 1)
-```
-
----
-
-```{r}
-my_check_string <- function(x,
-                            arg = caller_arg(x),
-                            call = caller_env()) {
-  if (!is_string(x)) {
-    expected <- obj_type_friendly(x)
+  if (actual != n) {
     cli::cli_abort(
-      "{.arg {arg}} must be a single string, not {}",
-      arg = arg,
+      "Vector must have {n} distinct values, not {actual}.",
       call = call
+    )
+  }
+}
+```
+
+\
+
+Now mentions `my_function()`
+
+```{r error=TRUE}
+my_function(1:10)
+```
+
+---
+
+- "Vector" is not very relevant
+- Let's mention the function argument
+- But `check_n_distinct()` doesn't know the name!
+- Use `caller_arg()` to find it
+
+```{r}
+check_n_distinct <- function(x,
+                             n,
+                             call = rlang::caller_env(),
+                             arg = rlang::caller_arg(x)) {
+  actual <- dplyr::n_distinct(x)
+
+  if (actual != n) {
+    cli::cli_abort(
+      "{.arg {arg}} must have {n} distinct values, not {actual}.",
+      call = call,
+      arg = arg
     )
   }
 }
@@ -417,7 +365,7 @@ my_check_string <- function(x,
 
 ---
 
-`my_function()`
+TODO:
 
-- Failing early (esp. important with lazy evaluation)
-- Pass call when failing on behalf of
+- Show backtraces
+- Draft chained errors

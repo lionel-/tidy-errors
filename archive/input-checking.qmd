@@ -1,0 +1,104 @@
+## Reveal input type
+
+- What did you expect, what did you get?
+- Reveal input type and any other relevant aspect
+
+::: {.callout-note appearance="simple" icon=false}
+::: my-smaller
+**Principle** of relevance
+:::
+:::
+
+::: {.callout-note appearance="simple" icon=false}
+::: my-smaller
+- See `obj_type_friendly()` and `stop_input_type()` in `compat-obj-type.R`\
+  <https://github.com/r-lib/rlang/blob/main/R/compat-obj-type.R>
+
+- See examples in `types-check.R`\
+  <https://github.com/r-lib/rlang/blob/main/R/types-check.R>
+:::
+:::
+
+---
+
+From `types-check.R`\
+<https://github.com/r-lib/rlang/blob/main/R/types-check.R>
+
+```{r include=FALSE}
+library(rlang)
+stop_input_type <- rlang:::stop_input_type
+obj_type_friendly <- rlang:::obj_type_friendly
+```
+
+```{r}
+check_string <- function(x,
+                         ...,
+                         what = "a single string",
+                         arg = caller_arg(x),
+                         call = caller_env()) {
+  if (!is_string(x)) {
+    stop_input_type(x, what, ..., arg = arg, call = call)
+  }
+}
+
+my_function <- function(my_arg) {
+  check_string(my_arg)
+}
+```
+
+\
+
+```{r error=TRUE}
+my_function(1)
+```
+
+
+## Relevance
+
+In `check_string()` we passed `arg` and `call` arguments:
+
+```{r error=TRUE}
+my_function(my_arg = 1)
+```
+
+```{r include=FALSE}
+check_string <- function(x,
+                         ...,
+                         what = "a single string") {
+  if (!is_string(x)) {
+    stop_input_type(x, what, ...)
+  }
+}
+```
+
+\
+
+Here is what it would look otherwise:
+
+```{r error=TRUE}
+my_function(my_arg = 1)
+```
+
+---
+
+```{r}
+my_check_string <- function(x,
+                            arg = caller_arg(x),
+                            call = caller_env()) {
+  if (!is_string(x)) {
+    expected <- obj_type_friendly(x)
+    cli::cli_abort(
+      "{.arg {arg}} must be a single string, not {}",
+      arg = arg,
+      call = call
+    )
+  }
+}
+```
+
+---
+
+`my_function()`
+
+- Failing early (esp. important with lazy evaluation)
+- Pass call when failing on behalf of
