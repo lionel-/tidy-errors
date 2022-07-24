@@ -58,8 +58,8 @@ Error reporting isn't a priority but is important nonetheless.
 ::: {.column width="45%"}
 #### Tools
 
-- Format with cli
 - Follow the style guide
+- Format with cli
 - Use error bullets
 - Pass error calls and arguments
 - Use chained errors
