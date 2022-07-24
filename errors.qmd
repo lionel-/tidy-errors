@@ -365,6 +365,18 @@ check_n_distinct <- function(x,
 
 ---
 
+We take arguments so the checking function may be wrapped:
+
+```{r}
+check_3_distinct <- function(x,
+                             call = rlang::caller_env(),
+                             arg = rlang::caller_arg(x)) {
+  check_n_distinct(x, n = 3, call = call, arg = arg)
+}
+```
+
+---
+
 TODO:
 
 - Show backtraces
