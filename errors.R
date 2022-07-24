@@ -83,3 +83,59 @@ my_function(1:3)
 #> Error in `my_function()`:
 #> ! `x` must have 2 distinct values, not 3.
 #> Run `rlang::last_trace()` to see where the error occurred.
+
+
+#  Chained errors
+
+mtcars |>
+  group_by(cyl) |>
+  mutate(new = 1 + "")
+#> Error in `mutate()`:
+#> ! Problem while computing `new = 1 + ""`.
+#> ℹ The error occurred in group 1: cyl = 4.
+#> Caused by error in `1 + ""`:
+#> ! non-numeric argument to binary operator
+
+mtcars |>
+  ggplot() +
+  geom_point(aes(1 + ""))
+#> Error in `geom_point(aes(1 + ""))`:
+#> ! Problem while computing aesthetics.
+#> ℹ Error occurred in the 1st layer.
+#> Caused by error in `1 + ""`:
+#> ! non-numeric argument to binary operator
+
+
+map <- function(.xs, .fn, ...) {
+  # Capture the defused code supplied as `.fn`
+  fn_code <- substitute(.fn)
+
+  out <- new_list(length(.xs))
+
+  for (i in seq_along(.xs)) {
+    try_fetch(
+      out[[i]] <- .fn(.xs[[i]], ...),
+      error = function(cnd) {
+        # Inspect the `call` field to detect `.fn` calls
+        if (is_call(cnd$call, ".fn")) {
+          # Replace `.fn` by the defused code.
+          # Keep existing arguments.
+          cnd$call[[1]] <- fn_code
+        }
+        abort(
+          sprintf("Problem while mapping element %s.", i),
+          parent = cnd
+        )
+      }
+    )
+  }
+
+  out
+}
+
+list(1, "foo") |>
+  map(magrittr::add, 100)
+#> Error in `map()`:
+#> ! Problem while mapping element 2.
+#> Caused by error in `magrittr::add()`:
+#> ! non-numeric argument to binary operator

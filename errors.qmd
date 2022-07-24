@@ -392,8 +392,71 @@ Compare to the full backtrace without highlight
 
 ![](trace-no-drop.png)
 
+
+# Chained errors
+
+## Chained errors
+
+- Provide higher-level context
+- Show multiple errors, each with its own bullets
+
+::: {.callout-note appearance="simple" icon=false}
+::: my-smaller
+**Principles**:
+
+- Exhaustiveness
+- relevance
+:::
+:::
+
 ---
 
-TODO:
+Evaluation context:
 
-- Draft chained errors
+```r
+mtcars |>
+  group_by(cyl) |>
+  mutate(new = 1 + "")
+#> Error in `mutate()`:
+#> ! Problem while computing `new = 1 + ""`.
+#> ℹ The error occurred in group 1: cyl = 4.
+#> Caused by error in `1 + ""`:
+#> ! non-numeric argument to binary operator
+```
+
+\
+
+```r
+mtcars |>
+  ggplot() +
+  geom_point(aes(1 + ""))
+#> Error in `geom_point(aes(1 + ""))`:
+#> ! Problem while computing aesthetics.
+#> ℹ Error occurred in the 1st layer.
+#> Caused by error in `1 + ""`:
+#> ! non-numeric argument to binary operator
+```
+
+
+---
+
+Iteration context:
+
+```r
+list(1, "foo") |>
+  map(magrittr::add, 100)
+#> Error in `map()`:
+#> ! Problem while mapping element 2.
+#> Caused by error in `magrittr::add()`:
+#> ! non-numeric argument to binary operator
+```
+
+---
+
+Technical complications:\
+
+- Notion of error objects
+- Rethrowing errors with a parent
+
+To learn more about this:\
+<https://rlang.r-lib.org/reference/topic-error-chaining.html>
