@@ -329,20 +329,19 @@ check_n_distinct <- function(x, n, call = rlang::caller_env()) {
     )
   }
 }
-```
 
-\
-
-Now mentions `my_function()`
-
-```{r error=TRUE}
 my_function(1:10)
 ```
 
+Now mentions `my_function()`\
+
+. . .
+
+What about the argument name?
+
 ---
 
-- "Vector" is not very relevant
-- Let's mention the function argument
+- We'd like to mention the function argument
 - But `check_n_distinct()` doesn't know the name!
 - Use `caller_arg()` to find it
 
@@ -365,7 +364,7 @@ check_n_distinct <- function(x,
 
 ---
 
-We take arguments so the checking function may be wrapped:
+Since `call` and `arg` are arguments, it's easy to wrap in another function:
 
 ```{r}
 check_3_distinct <- function(x,
@@ -377,7 +376,24 @@ check_3_distinct <- function(x,
 
 ---
 
+Side benefits:
+
+- `call = caller_env()`:\
+  Error helpers are hidden from backtraces
+
+- `arg = caller_arg(x)`:\
+  Argument is highlighted in backtraces
+
+![](trace-drop-arg.png)
+
+---
+
+Compare to the full backtrace without highlight
+
+![](trace-no-drop.png)
+
+---
+
 TODO:
 
-- Show backtraces
 - Draft chained errors
