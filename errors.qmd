@@ -94,6 +94,13 @@ Principle of **consistency**
 
 - Guiding error style is hard---still a WIP
 
+::: notes
+Examples:
+
+- `x` must be a character vector.
+- `y` can't contain keys that already exist in `x`.
+:::
+
 
 # Format with cli
 
