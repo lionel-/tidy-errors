@@ -24,6 +24,7 @@ library(tidyverse)
 ::: {.column width="60%"}
 - Main way users interact with your software
 - Often an afterthought
+- Going beyond `stopifnot()`
 :::
 
 ::: {.column width="40%"}
@@ -118,18 +119,14 @@ Examples:
 
 ## glue interpolation
 
-::: {.callout-note appearance="simple" icon=false}
-::: my-smaller
-Principle of **transparency** (reveal values/types)
-:::
-:::
-
 cli embeds glue interpolation
 
 ```{r error=TRUE}
 action <- "paint"
 what <- "canvas"
 how <- "in green"
+
+cli::cli_abort(paste0("Can't ", action, " ", what, " ", how))
 
 cli::cli_abort("Can't {action} {what} {how}.")
 ```
@@ -140,7 +137,41 @@ Interpolating encourages us to create dynamic rather than static messages, which
 
 ---
 
-## cli style classes
+::: {.callout-note appearance="simple" icon=false}
+::: my-smaller
+Principle of **transparency** (reveal values/types)
+:::
+:::
+
+```{r error=TRUE}
+x <- 1:3
+cli::cli_abort("`x` must be <character>, not <{typeof(x)}>")
+```
+
+\
+
+::: my-smaller
+See also `obj_type_friendly()` in\
+<https://github.com/r-lib/rlang/blob/main/R/compat-obj-type.R>
+:::
+
+```{r include=FALSE}
+obj_type_friendly <- rlang:::obj_type_friendly
+```
+
+```{r error=TRUE}
+cli::cli_abort("`x` must be a character vector, not {obj_type_friendly(x)}.")
+```
+
+## cli inline markup
+
+- Apply style to part of the string
+- Curly brace syntax with dotted style name
+- Extensive theming mechanism
+
+```{r error=TRUE}
+cli::cli_abort("{.arg x} must be a path of the form {.path /home/foo}.")
+```
 
 ::: {.callout-note appearance="simple" icon=false}
 ::: my-smaller
@@ -148,22 +179,15 @@ Principle of **consistency**
 :::
 :::
 
-
-It supports style classes (quotes and colours)
-
-```{r error=TRUE}
-cli::cli_abort("{.arg x} can't be supplied to {.code foo()}.")
-```
-
 ---
 
-Styles and interpolation can be combined
+Markup and interpolation can be combined
 
 ```{r error=TRUE}
 arg <- "x"
-call <- "foo()"
+path <- "/home/foo"
 
-cli::cli_abort("{.arg {arg}} can't be supplied to {.code {call}}.")
+cli::cli_abort("{.arg {arg}} must be a path of the form {.path {path}}.")
 ```
 
 ---
@@ -283,7 +307,7 @@ Principle of **relevance**
 :::
 
 
-## Pass error calls and arguments
+## Error calls
 
 By default R reports the last function before failure
 
@@ -371,14 +395,28 @@ check_n_distinct <- function(x,
 
 ---
 
+Now mentions both the function and argument
+
+```{r error=TRUE}
+my_function(1:10)
+```
+
+---
+
 Since `call` and `arg` are arguments, it's easy to wrap in another function:
 
-```{r}
+```{r error = TRUE}
 check_3_distinct <- function(x,
                              call = rlang::caller_env(),
                              arg = rlang::caller_arg(x)) {
   check_n_distinct(x, n = 3, call = call, arg = arg)
 }
+
+my_function <- function(my_arg) {
+  check_3_distinct(my_arg)
+}
+
+my_function(1:10)
 ```
 
 ---
