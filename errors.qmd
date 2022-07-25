@@ -67,11 +67,11 @@ Error reporting isn't a priority but is important nonetheless.
 ::::
 
 ::: {.notes}
-Consistency: Repetition is good. Recognisability. Style guide.
-Transparency: Reveal inputs
-Relevance: Where did the error fail. Fail early.
-Exhaustiveness: Context matters.
-Conciseness: Don't overwhelm.
+Consistency: Quickly recognise errors by scanning the ouptut.
+Transparency: Reveal exactly what went wrong (problematic type, value).
+Relevance: Where did the error fail.
+Exhaustiveness: Context is informative.
+Conciseness: Don't overwhelm. Helps quick recognition.
 :::
 
 
@@ -90,7 +90,7 @@ Principle of **consistency**
 - State problem with "must" and "can't" phrases
 
   - "Must" when you know what is a valid input
-  - "Can't" when you know what is an invalid input
+  - "Can't" when you can't state exactly what is expected
 
 - Guiding error style is hard---still a WIP
 
@@ -98,7 +98,7 @@ Principle of **consistency**
 Examples:
 
 - `x` must be a character vector.
-- `y` can't contain keys that already exist in `x`.
+- Can't find column `b` in data.
 :::
 
 
@@ -120,7 +120,7 @@ Examples:
 
 ::: {.callout-note appearance="simple" icon=false}
 ::: my-smaller
-Principle of **transparency** (show values)
+Principle of **transparency** (reveal values/types)
 :::
 :::
 
