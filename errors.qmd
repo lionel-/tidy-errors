@@ -81,7 +81,7 @@ Conciseness: Don't overwhelm.
 
 ::: {.callout-note appearance="simple" icon=false}
 ::: my-smaller
-**Principle** of consistency
+Principle of **consistency**
 :::
 :::
 
@@ -113,7 +113,7 @@ Conciseness: Don't overwhelm.
 
 ::: {.callout-note appearance="simple" icon=false}
 ::: my-smaller
-**Principle** of transparency (show values)
+Principle of **transparency** (show values)
 :::
 :::
 
@@ -137,7 +137,7 @@ Interpolating encourages us to create dynamic rather than static messages, which
 
 ::: {.callout-note appearance="simple" icon=false}
 ::: my-smaller
-**Principle** of consistency
+Principle of **consistency**
 :::
 :::
 
@@ -199,10 +199,10 @@ But be *exhaustive*:
 ::: {.column width="40%"}
 ::: {.callout-note appearance="simple" icon=false}
 ::: my-smaller
-**Principles**
+Principles:
 
-- Concision
-- Exhaustiveness
+- **Concision**
+- **Exhaustiveness**
 :::
 :::
 :::
@@ -271,7 +271,7 @@ cli::cli_abort(c("My error message.", bullets))
 
 ::: {.callout-note appearance="simple" icon=false}
 ::: my-smaller
-**Principle** of relevance
+Principle of **relevance**
 :::
 :::
 
@@ -395,17 +395,15 @@ Compare to the full backtrace without highlight
 
 # Chained errors
 
-## Chained errors
-
 - Provide higher-level context
 - Show multiple errors, each with its own bullets
 
 ::: {.callout-note appearance="simple" icon=false}
 ::: my-smaller
-**Principles**:
+Principles:
 
-- Exhaustiveness
-- relevance
+- **Exhaustiveness**
+- **Relevance**
 :::
 :::
 
